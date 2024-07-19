@@ -1,6 +1,7 @@
 import os
 import glob
 import subprocess
+import shlex
 
 from ulauncher.api.client.Extension import Extension
 from ulauncher.api.client.EventListener import EventListener
@@ -39,7 +40,8 @@ class KeywordQueryEventListener(EventListener):
 class ItemEnterEventListener(EventListener):
 
     def open_workspace(self, workspace):
-        subprocess.call(f"code {workspace}", shell=True)
+        quoted_workspace = shlex.quote(workspace)
+        subprocess.call(f"code {quoted_workspace}", shell=True)
 
     def on_event(self, event, extension):
         data = event.get_data()
